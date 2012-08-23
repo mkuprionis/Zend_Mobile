@@ -157,6 +157,14 @@ class Zend_Mobile_Push_Message_Apns extends Zend_Mobile_Push_Message_Abstract
         }
         $this->_badge = (int) $badge;
     }
+    
+    /**
+     * Clear Badge
+     */
+    public function clearBadge() 
+    {
+        $this->_badge = null;
+    }
 
     /**
      * Get Expire
@@ -208,6 +216,14 @@ class Zend_Mobile_Push_Message_Apns extends Zend_Mobile_Push_Message_Abstract
         }
         $this->_sound = $sound;
         return $this;
+    }
+    
+    /**
+     * Clear Sound
+     */
+    public function clearSound()
+    {
+        $this->_sound = null;
     }
 
     /**

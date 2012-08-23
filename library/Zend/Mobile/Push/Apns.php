@@ -300,10 +300,21 @@ class Zend_Mobile_Push_Apns extends Zend_Mobile_Push_Abstract
             }
         }
         if (!empty($alert)) {
-            $payload['aps']['alert'] = $alert;
+            if (isset($alert['alert']) && count($alert) == 1) {
+                // If only alert text is set, save a few bytes
+                // by defining it as string:
+                // ( `"abc"` instead of `{"alert":"abc"}` )
+                $payload['aps']['alert'] = $alert['alert'];
+            } else {
+                $payload['aps']['alert'] = $alert;
+            }
         }
-        $payload['aps']['badge'] = $message->getBadge();
-        $payload['aps']['sound'] = $message->getSound();
+        if ($message->getBadge() !== null) {
+          $payload['aps']['badge'] = $message->getBadge();
+        }
+        if ($message->getSound() !== null) {
+          $payload['aps']['sound'] = $message->getSound();
+        }
 
         foreach($message->getCustomData() as $k => $v) {
             $payload[$k] = $v;
